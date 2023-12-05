@@ -1,0 +1,11 @@
+{
+    "localIP": "localhost",
+    "localPort": 20001,
+    "bufferSize": 1024,
+    "banco_de_dados": {
+        "host": "localhost",
+        "usuario": "root",
+        "senha": "admin",
+        "database": "dev"
+    }
+}

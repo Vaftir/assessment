@@ -1,55 +1,71 @@
-# assessment
-O projeto deve ser segmentado em duas etapas
+# Yago Faria - Prova SS Telemática - Fullstack
 
-#########################################################################
-PRIMEIRA ETAPA
-#########################################################################
+## Aplicação Cliente-Servidor UDP para Gerenciamento de Dados em Banco de Dados MySQL
 
-Crie uma aplicação em Python, ou na linguagem de sua escolha, que funcione como um servidor de soquete UDP para receber pacotes no formato texto.
+Este repositório contém uma aplicação simples cliente-servidor UDP para gerenciamento de dados em um banco de dados MySQL. O servidor recebe mensagens UDP do cliente, realiza o parsing dos dados, insere as informações em uma tabela do banco de dados e responde ao cliente.
 
-Certifique-se de que os pacotes recebidos sigam o formato especificado:
 
-# >DATAtype,protocolo,yymmddhhmmss,status;ID=id<
 
-exemplos: 
+### Estrutura do Projeto
 
-# >DATA1,66,220918235757,1;ID=123<
-# >DATA2,66,220921230008,0;ID=456<
+**Server:** Contém o código do servidor responsável por receber mensagens do cliente, processar os dados e interagir com o banco de dados.
 
-Crie uma função que analise o comando de entrada e efetue o parsing dos dados, armazenando-os em um arquivo JSON no formato a seguir:
+- **UDPServer.py:** Implementação do servidor UDP.
 
-{“type”: 1, “protocolo”: 66, “utc”: “2022-09-18 23:57:57”, “status”: 0, “id”: “123”}
+- **config.json**: Arquivo de configuração com detalhes como IP, porta e tamanho do buffer.
 
-Estabelecer uma base de dados local que inclua uma tabela única para acomodar esses dados. A tabela será denominada 'dev_status' e deverá compreender as seguintes colunas:
+**Client**: Contém o código do cliente, que simula o envio periódico de mensagens para o servidor.
 
-# type int
-# protocolo int
-# utc datetime
-# status int
-# id varchar
+- **UDPSimulator.py**: Implementação do cliente simulador.
 
-Utilize o banco de dados de preferência
+**Package**: Pacote com módulos compartilhados.
 
-#########################################################################
-SEGUNDA ETAPA
-#########################################################################
+- **ConectSQL.py:** Implementação da classe **'ConectSQL'** para gerenciar a conexão com o banco de dados.
 
-Crie um 'simulador' de comandos que gere pacotes de maneira aleatória, mantendo-se dentro do padrão estabelecido.
+### Requisitos
 
-# >DATAtype,protocolo,yymmddhhmmss,status;ID=id<
+- Python 3.x
 
-seguindo as regras de:
+- Biblioteca **mysql-connector-python:** Instalável via:
+  
+      pip install mysql-connector-python 
 
- - type - só pode ser 1 ou 2
- - protocolo - só pode ser 66, 67 ou 68
- - data - NOW()
- - status - só pode ser 0 ou 1
- - id - deve conter somente 3 caracteres aleatórios
+### Configuração
 
-Quando o simulador é executado, ele deve permanecer em execução até ser interrompido. Deverá estabelecer uma conexão com o soquete e, a cada 5 segundos, enviar um conjunto de dados. 
+1. Instale as dependências utilizando o comando:
+   
+       pip install -r requirements.txt`
 
-#########################################################################
+2. Configure as informações do banco de dados no arquivo `config.json` no diretório `Server`
+   
+       {
+        "localIP": "localhost",
+        "localPort": 20001,
+        "bufferSize": 1024,
+        "banco_de_dados": {
+            "host": "seu_host",
+            "usuario": "seu_usuario",
+            "senha": "sua_senha",
+            "database": "seu_banco_de_dados"
+        }
+   
+    }
 
-Fornecer uma descrição detalhada dos passos necessários para iniciar e executar o processo
+Substitua `"seu_host"`, `"seu_usuario"`, `"sua_senha"` e `"seu_banco_de_dados"` pelos detalhes da sua configuração MySQL.
 
-BOA SORTE!
+### Execução:
+
+1. Inicie o servidor executando o arquivo `UDPServer.py` no diretório `Server`.
+
+```bash
+python UDPServer.py
+```
+
+2. Em um terminal separado, inicie o cliente simulador executando o arquivo `UDPSimulator.py` no diretório `Client`.
+
+O cliente enviará mensagens simuladas periodicamente para o servidor, que processará e inserirá os dados no banco de dados MySQL.
+
+### Encerramento
+
+* Para interromper o servidor, pressione `Ctrl+C` no terminal em que o servidor está sendo executado.
+* Para interromper o cliente simulador, pressione `Ctrl+C` no terminal em que o cliente simulador está sendo executado.
