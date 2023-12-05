@@ -4,8 +4,8 @@
     "bufferSize": 1024,
     "banco_de_dados": {
         "host": "localhost",
-        "usuario": "root",
-        "senha": "admin",
+        "usuario": "seu-usuário",
+        "senha": "sua-senha",
         "database": "dev"
     }
 }
