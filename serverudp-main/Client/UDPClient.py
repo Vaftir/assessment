@@ -1,6 +1,7 @@
 import socket
 import datetime
 
+
 class UDPClient:
     def __init__(self, server_address=('localhost', 20001), buffer_size=1024):
         self.server_address = server_address
